@@ -9,9 +9,7 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
 
-    const user = { name: 'tazin' }
-
-    /* const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const logout = () => {
@@ -42,9 +40,9 @@ const AuthProvider = ({ children }) => {
         return () => {
             return unsubscribe();
         }
-    }, []) */
+    }, [])
 
-    const value = { user, /* createUser, loading, signIn, updateUser, logout  */ }
+    const value = { user, createUser, loading, signIn, updateUser, logout }
     return (
         <AuthContext.Provider value={value}>
             {children}
