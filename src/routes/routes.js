@@ -1,3 +1,4 @@
+import Checkout from "../pages/Checkout/Checkout";
 import Home from "../pages/Home/Home";
 import Services from "../pages/Home/Services";
 
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
             {
                 path: '/services',
                 element: <Services></Services>
+            },
+            {
+                path: '/checkout',
+                element: <Checkout></Checkout>
             }
         ]
     }
