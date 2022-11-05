@@ -1,4 +1,5 @@
 import Home from "../pages/Home/Home";
+import Services from "../pages/Home/Services";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../layouts/Main");
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register></Register>
+            },
+            {
+                path: '/services',
+                element: <Services></Services>
             }
         ]
     }
