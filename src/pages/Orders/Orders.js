@@ -18,19 +18,23 @@ const Orders = () => {
     }, [user?.email]);
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:5000/orders/${id}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if (data.deletedCount > 0) {
-                    const remained = orders.filter(odr => odr._id !== id);
-                    setOrders(remained)
-                    console.log(remained);
-                    alert(`Deleted!`)
-                }
+        const agree = window.confirm('Are you sure you want to delete')
+        if (agree) {
+            fetch(`http://localhost:5000/orders/${id}`, {
+                method: 'DELETE',
             })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.deletedCount > 0) {
+                        const remained = orders.filter(odr => odr._id !== id);
+                        setOrders(remained)
+                        console.log(remained);
+                        alert(`Deleted!`)
+                    }
+                })
+        }
+
     }
 
     const handleStatusUpdate = (id) => {
