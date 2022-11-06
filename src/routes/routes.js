@@ -1,6 +1,7 @@
 import Checkout from "../pages/Checkout/Checkout";
 import Home from "../pages/Home/Home";
 import Services from "../pages/Home/Services";
+import Update from "../pages/Update/Update";
 import PrivateRoute from "./PrivateRoute";
 
 const { createBrowserRouter } = require("react-router-dom");
@@ -38,6 +39,11 @@ export const router = createBrowserRouter([
                 path: '/checkout/:id',
                 element: <PrivateRoute><Checkout></Checkout></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`)
+            },
+            {
+                path: '/update/:id',
+                element: <Update></Update>,
+                loader: ({ params }) => fetch(`http://localhost:5000/orders/${params.id}`)
             }
         ]
     }
