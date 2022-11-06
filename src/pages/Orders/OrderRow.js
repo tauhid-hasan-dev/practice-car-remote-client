@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OrderRow = ({ order, handleDelete }) => {
+const OrderRow = ({ order, handleDelete, handleStatusUpdate }) => {
     const { title, name, _id, phone, price, status } = order;
 
     return (
@@ -32,7 +32,7 @@ const OrderRow = ({ order, handleDelete }) => {
             </td>
             <td>Purple</td>
             <th>
-                <button className="btn btn-ghost btn-xs">{status ? status : 'Pending'}</button>
+                <button onClick={() => handleStatusUpdate(_id)} className="btn btn-ghost btn-xs">{status ? status : 'Pending'}</button>
             </th>
         </tr>
     );
