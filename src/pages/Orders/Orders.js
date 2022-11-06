@@ -9,6 +9,9 @@ const Orders = () => {
     useEffect(() => {
         fetch(`http://localhost:5000/orders?email=${user?.email}`, {
             method: 'GET',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('practice-car')}`
+            }
         })
             .then(res => res.json())
             .then(data => {

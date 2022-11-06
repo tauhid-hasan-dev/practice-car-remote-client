@@ -21,24 +21,24 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 const currentUser = {
-                    email: user.email
+                    email: user?.email
                 }
 
-                console.log(currentUser)
-                //getting token from the server
-                fetch('https://smart-car-server.vercel.app/jwt', {
+                fetch('http://localhost:5000/jwt', {
                     method: 'POST',
                     headers: {
-                        'content-type': 'application/json'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(currentUser)
                 })
                     .then(res => res.json())
                     .then(data => {
                         console.log(data);
-                        localStorage.setItem('smart-token', data.token);
+                        localStorage.setItem('practice-car', data.token);
                         navigate(from, { replace: true });
                     })
+
+
                 /* navigate(from, { replace: true });
                 toast.success('You are logged in!')
                 console.log(user); */
