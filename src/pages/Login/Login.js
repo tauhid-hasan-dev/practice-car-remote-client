@@ -1,14 +1,17 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const Login = () => {
-    const { signIn } = useContext(AuthContext);
+    const { signIn, googleSignIn } = useContext(AuthContext);
     let location = useLocation();
     const navigate = useNavigate();
 
     let from = location.state?.from?.pathname || "/";
+
+    const googleProvider = new GoogleAuthProvider();
 
     const handleSignIn = (event) => {
         event.preventDefault();
@@ -48,6 +51,37 @@ const Login = () => {
                 toast.error(err)
             })
 
+    }
+
+
+    const handleGoogleSignIn = () => {
+        googleSignIn(googleProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                const currentUser = {
+                    email: user?.email
+                }
+
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        localStorage.setItem('practice-car', data.token);
+                        /*  navigate(from, { replace: true }); */
+                    })
+
+            })
+            .catch(err => {
+                console.error(err);
+                alert(err)
+            })
     }
     return (
         <div className="hero">
@@ -98,7 +132,7 @@ const Login = () => {
                         Log in with one of the following
                     </div>
                     <div className='flex flex-row justify-center gap-3 mb-5 w-[25%]'>
-                        <button className="btn btn-outline btn-warning rounded  flex gap-2"> Google </button>
+                        <button onClick={handleGoogleSignIn} className="btn btn-outline btn-warning rounded  flex gap-2"> Google </button>
                         <button className="btn btn-outline btn-warning rounded flex gap-2 "> Github</button>
                     </div>
                 </div >

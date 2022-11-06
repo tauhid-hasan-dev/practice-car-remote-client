@@ -15,7 +15,7 @@ const Orders = () => {
         })
             .then(res => {
                 if (res.status === 401 || res.status === 403) {
-                    return logout()
+                    return logout();
                 }
                 return res.json();
             })
