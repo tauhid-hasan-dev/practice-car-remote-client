@@ -4,7 +4,7 @@ import OrderRow from './OrderRow';
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
     useEffect(() => {
         fetch(`http://localhost:5000/orders?email=${user?.email}`, {
@@ -13,12 +13,17 @@ const Orders = () => {
                 authorization: `Bearer ${localStorage.getItem('practice-car')}`
             }
         })
-            .then(res => res.json())
-            .then(data => {
-                //console.log(data);
-                setOrders(data)
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    return logout()
+                }
+                return res.json();
             })
-    }, [user?.email]);
+            .then(data => {
+                console.log(data);
+                setOrders(data);
+            })
+    }, [user?.email, logout]);
 
     const handleDelete = (id) => {
         const agree = window.confirm('Are you sure you want to delete')
